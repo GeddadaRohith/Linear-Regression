@@ -1,0 +1,952 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "f39000fd-1dff-44fa-abb8-4a93f09115d8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: nltk in c:\\users\\rohit\\anaconda3\\lib\\site-packages (3.9.1)\n",
+      "Requirement already satisfied: click in c:\\users\\rohit\\anaconda3\\lib\\site-packages (from nltk) (8.1.7)\n",
+      "Requirement already satisfied: joblib in c:\\users\\rohit\\anaconda3\\lib\\site-packages (from nltk) (1.4.2)\n",
+      "Requirement already satisfied: regex>=2021.8.3 in c:\\users\\rohit\\anaconda3\\lib\\site-packages (from nltk) (2024.9.11)\n",
+      "Requirement already satisfied: tqdm in c:\\users\\rohit\\anaconda3\\lib\\site-packages (from nltk) (4.66.5)\n",
+      "Requirement already satisfied: colorama in c:\\users\\rohit\\anaconda3\\lib\\site-packages (from click->nltk) (0.4.6)\n"
+     ]
+    }
+   ],
+   "source": [
+    "!pip install nltk"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9e53f037-f406-4c0e-825e-6f5a35abd08a",
+   "metadata": {},
+   "source": [
+    "Ah, you meant NLTK! The Natural Language Toolkit (NLTK) is a Python library used for natural language processing tasks. It provides tools for text processing, including tokenization, stemming, lemmatization, parsing, and more.\n",
+    "\n",
+    "Here are some common features of NLTK:\n",
+    "\n",
+    "1. Tokenization\n",
+    "Splits text into words or sentences.\n",
+    "\n",
+    "python\n",
+    "Copy code\n",
+    "from nltk.tokenize import word_tokenize, sent_tokenize\n",
+    "\n",
+    "text = \"NLTK is a powerful toolkit for NLP.\"\n",
+    "words = word_tokenize(text)\n",
+    "sentences = sent_tokenize(text)\n",
+    "\n",
+    "print(\"Words:\", words)\n",
+    "print(\"Sentences:\", sentences)\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "2. Stop Words Removal\n",
+    "Removes commonly used words (e.g., \"is\", \"the\") that may not add much value.\n",
+    "\n",
+    "python\n",
+    "Copy code\n",
+    "from nltk.corpus import stopwords\n",
+    "\n",
+    "stop_words = set(stopwords.words('english'))\n",
+    "filtered_words = [word for word in words if word.lower() not in stop_words]\n",
+    "\n",
+    "print(\"Filtered Words:\", filtered_words)\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "3. Stemming\n",
+    "Reduces words to their root form.\n",
+    "\n",
+    "python\n",
+    "Copy code\n",
+    "from nltk.stem import PorterStemmer\n",
+    "\n",
+    "stemmer = PorterStemmer()\n",
+    "stems = [stemmer.stem(word) for word in words]\n",
+    "\n",
+    "print(\"Stems:\", stems)\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "4. Lemmatization\n",
+    "Reduces words to their dictionary (base) form.\n",
+    "\n",
+    "python\n",
+    "Copy code\n",
+    "from nltk.stem import WordNetLemmatizer\n",
+    "\n",
+    "lemmatizer = WordNetLemmatizer()\n",
+    "lemmas = [lemmatizer.lemmatize(word) for word in words]\n",
+    "\n",
+    "print(\"Lemmas:\", lemmas)\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "5. POS Tagging\n",
+    "Identifies parts of speech (e.g., noun, verb).\n",
+    "\n",
+    "python\n",
+    "Copy code\n",
+    "from nltk import pos_tag\n",
+    "\n",
+    "pos_tags = pos_tag(words)\n",
+    "print(\"POS Tags:\", pos_tags)\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "6. Named Entity Recognition (NER)\n",
+    "Identifies proper nouns, organizations, dates, etc.\n",
+    "\n",
+    "python\n",
+    "Copy code\n",
+    "from nltk import ne_chunk\n",
+    "\n",
+    "ner_tree = ne_chunk(pos_tags)\n",
+    "print(ner_tree)\n",
+    "Installation\n",
+    "Ensure you have installed NLTK:\n",
+    "\n",
+    "bash\n",
+    "Copy code\n",
+    "pip install nltk\n",
+    "Download required data:\n",
+    "\n",
+    "python\n",
+    "Copy code\n",
+    "import nltk\n",
+    "nltk.download('all')  # Or download specific packages like 'punkt', 'stopwords', etc.\n",
+    "Let me know if you need a detailed example or help with a specific NLTK feature!\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0b112da0-15e9-4750-8c74-4d66332738e4",
+   "metadata": {
+    "collapsed": true,
+    "jupyter": {
+     "outputs_hidden": true
+    },
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[nltk_data] Downloading collection 'all'\n",
+      "[nltk_data]    | \n",
+      "[nltk_data]    | Downloading package abc to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package abc is already up-to-date!\n",
+      "[nltk_data]    | Downloading package alpino to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package alpino is already up-to-date!\n",
+      "[nltk_data]    | Downloading package averaged_perceptron_tagger to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package averaged_perceptron_tagger is already up-\n",
+      "[nltk_data]    |       to-date!\n",
+      "[nltk_data]    | Downloading package averaged_perceptron_tagger_eng to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package averaged_perceptron_tagger_eng is already\n",
+      "[nltk_data]    |       up-to-date!\n",
+      "[nltk_data]    | Downloading package averaged_perceptron_tagger_ru to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package averaged_perceptron_tagger_ru is already\n",
+      "[nltk_data]    |       up-to-date!\n",
+      "[nltk_data]    | Downloading package averaged_perceptron_tagger_rus to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package averaged_perceptron_tagger_rus is already\n",
+      "[nltk_data]    |       up-to-date!\n",
+      "[nltk_data]    | Downloading package basque_grammars to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package basque_grammars is already up-to-date!\n",
+      "[nltk_data]    | Downloading package bcp47 to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package bcp47 is already up-to-date!\n",
+      "[nltk_data]    | Downloading package biocreative_ppi to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package biocreative_ppi is already up-to-date!\n",
+      "[nltk_data]    | Downloading package bllip_wsj_no_aux to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package bllip_wsj_no_aux is already up-to-date!\n",
+      "[nltk_data]    | Downloading package book_grammars to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package book_grammars is already up-to-date!\n",
+      "[nltk_data]    | Downloading package brown to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package brown is already up-to-date!\n",
+      "[nltk_data]    | Downloading package brown_tei to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package brown_tei is already up-to-date!\n",
+      "[nltk_data]    | Downloading package cess_cat to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package cess_cat is already up-to-date!\n",
+      "[nltk_data]    | Downloading package cess_esp to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package cess_esp is already up-to-date!\n",
+      "[nltk_data]    | Downloading package chat80 to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package chat80 is already up-to-date!\n",
+      "[nltk_data]    | Downloading package city_database to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package city_database is already up-to-date!\n",
+      "[nltk_data]    | Downloading package cmudict to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package cmudict is already up-to-date!\n",
+      "[nltk_data]    | Downloading package comparative_sentences to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package comparative_sentences is already up-to-\n",
+      "[nltk_data]    |       date!\n",
+      "[nltk_data]    | Downloading package comtrans to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package comtrans is already up-to-date!\n",
+      "[nltk_data]    | Downloading package conll2000 to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package conll2000 is already up-to-date!\n",
+      "[nltk_data]    | Downloading package conll2002 to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package conll2002 is already up-to-date!\n",
+      "[nltk_data]    | Downloading package conll2007 to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package conll2007 is already up-to-date!\n",
+      "[nltk_data]    | Downloading package crubadan to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package crubadan is already up-to-date!\n",
+      "[nltk_data]    | Downloading package dependency_treebank to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package dependency_treebank is already up-to-date!\n",
+      "[nltk_data]    | Downloading package dolch to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package dolch is already up-to-date!\n",
+      "[nltk_data]    | Downloading package europarl_raw to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Package europarl_raw is already up-to-date!\n",
+      "[nltk_data]    | Downloading package extended_omw to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    | Downloading package floresta to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\floresta.zip.\n",
+      "[nltk_data]    | Downloading package framenet_v15 to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\framenet_v15.zip.\n",
+      "[nltk_data]    | Downloading package framenet_v17 to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\framenet_v17.zip.\n",
+      "[nltk_data]    | Downloading package gazetteers to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\gazetteers.zip.\n",
+      "[nltk_data]    | Downloading package genesis to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\genesis.zip.\n",
+      "[nltk_data]    | Downloading package gutenberg to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\gutenberg.zip.\n",
+      "[nltk_data]    | Downloading package ieer to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\ieer.zip.\n",
+      "[nltk_data]    | Downloading package inaugural to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\inaugural.zip.\n",
+      "[nltk_data]    | Downloading package indian to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\indian.zip.\n",
+      "[nltk_data]    | Downloading package jeita to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    | Downloading package kimmo to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\kimmo.zip.\n",
+      "[nltk_data]    | Downloading package knbc to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    | Downloading package large_grammars to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping grammars\\large_grammars.zip.\n",
+      "[nltk_data]    | Downloading package lin_thesaurus to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]    |   Unzipping corpora\\lin_thesaurus.zip.\n",
+      "[nltk_data]    | Downloading package mac_morpho to\n",
+      "[nltk_data]    |     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n"
+     ]
+    }
+   ],
+   "source": [
+    "import nltk\n",
+    "# nltk.download(\"punkt\") #for tokenization\n",
+    "# nltk.download(\"wordnet\") # For lemmatization\n",
+    "# nltk.download(\"stopwords\") # remove common words\n",
+    "# nltk.download(\"averaged_perceptron_tagger\") # For POS tagging\n",
+    "\n",
+    "nltk.download(\"all\") #for all at a time\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "96906d02-618c-4089-b172-69e0af14d7aa",
+   "metadata": {},
+   "source": [
+    "## Perform Basic NLP Tasks"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "df12e938-08d1-4cca-922e-260b8125cfe6",
+   "metadata": {},
+   "source": [
+    "# DOWNLOAD "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "7f5ebaa9-b741-4819-bfc7-6fc4bcb0671c",
+   "metadata": {
+    "collapsed": true,
+    "jupyter": {
+     "outputs_hidden": true
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[nltk_data] Downloading package punkt to\n",
+      "[nltk_data]     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]   Package punkt is already up-to-date!\n",
+      "[nltk_data] Downloading package wordnet to\n",
+      "[nltk_data]     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]   Package wordnet is already up-to-date!\n",
+      "[nltk_data] Downloading package stopwords to\n",
+      "[nltk_data]     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]   Package stopwords is already up-to-date!\n",
+      "[nltk_data] Downloading package averaged_perceptron_tagger to\n",
+      "[nltk_data]     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]   Package averaged_perceptron_tagger is already up-to-\n",
+      "[nltk_data]       date!\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import nltk\n",
+    "\n",
+    "nltk.download(\"punkt\") #for tokenization\n",
+    "nltk.download(\"wordnet\") # For lemmatization\n",
+    "nltk.download(\"stopwords\") # remove common words\n",
+    "nltk.download(\"averaged_perceptron_tagger\") # For POS tagging"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "0127a80d-a3a0-4302-9473-ea2f27771df7",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[nltk_data] Downloading package punkt_tab to\n",
+      "[nltk_data]     C:\\Users\\rohit\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]   Unzipping tokenizers\\punkt_tab.zip.\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "nltk.download(\"punkt_tab\") #for tokenization\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d090a28f-ca25-4334-ac56-3158712bdc56",
+   "metadata": {},
+   "source": [
+    "# 1. TOKENIZATION "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "42a805ec-ba9c-4468-bad6-ffdba32302e8",
+   "metadata": {},
+   "source": [
+    "### splitting the word"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "7cfedc2f-c240-47aa-9832-f16fa86e1a06",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdin",
+     "output_type": "stream",
+     "text": [
+      "Enter sentence:  hello ! i am rohith kumar . what us your name\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "words:  ['hello', '!', 'i', 'am', 'rohith', 'kumar', '.', 'what', 'us', 'your', 'name']\n",
+      "sentence:  ['hello !', 'i am rohith kumar .', 'what us your name']\n"
+     ]
+    }
+   ],
+   "source": [
+    "from nltk.tokenize import word_tokenize , sent_tokenize\n",
+    "\n",
+    "text = str(input(\"Enter sentence: \"))\n",
+    "\n",
+    "word = word_tokenize(text)\n",
+    "\n",
+    "\n",
+    "sent = sent_tokenize(text)\n",
+    "\n",
+    "print(\"words: \",word)\n",
+    "print(\"sentence: \",sent)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "49afe94d-a74f-41f0-ab57-32772f12f742",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from nltk.tokenize import word_tokenize , sent_tokenize\n",
+    "text = \"Hello! How are you doing today? NLTK is great for NLP.\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "a88a5b35-d20d-4ba9-ab4b-e46ddf912e7c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['Hello', '!', 'How', 'are', 'you', 'doing', 'today', '?', 'NLTK', 'is', 'great', 'for', 'NLP', '.']\n"
+     ]
+    }
+   ],
+   "source": [
+    "word = word_tokenize(text)\n",
+    "print(word)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "ec7b9fdc-5a82-40aa-af8c-b94d6228a605",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['Hello!', 'How are you doing today?', 'NLTK is great for NLP.']\n"
+     ]
+    }
+   ],
+   "source": [
+    "sent = sent_tokenize(text)\n",
+    "print(sent)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a86366c8-1774-493b-8f8f-4b77eb6b4daa",
+   "metadata": {},
+   "source": [
+    "# Stopwords"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1f7944b5-0ef9-4656-8d3b-a83694fb9631",
+   "metadata": {},
+   "source": [
+    "### removing words"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "ddc1dd5b-5b7b-4f9f-8d94-1cea939457fe",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from nltk.corpus import stopwords #importing lib"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "7a435cda-70ab-41a5-b895-69350d5fce11",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['Hello', '!', 'today', '?', 'NLTK', 'great', 'NLP', '.']\n"
+     ]
+    }
+   ],
+   "source": [
+    "stop_words = set(stopwords.words('english')) #setting language to english\n",
+    "\n",
+    "text = \"Hello! How are you doing today? NLTK is great for NLP.\" #example text\n",
+    "\n",
+    "words = word_tokenize(text) #tokenizing the give text\n",
+    "\n",
+    "filtered_words = [w for w in words if w.lower() not in stop_words]\n",
+    "\n",
+    "print(filtered_words)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "9bbdb0e1-6738-4c42-8ea2-3bc52badb5ee",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'hello! how are you doing today? nltk is great for nlp.'"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "text = \"Hello! How are you doing today? NLTK is great for NLP.\"\n",
+    "text.lower()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "7cec359c-3ffd-4e16-b0d6-f23fac321c0a",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['i',\n",
+       " 'me',\n",
+       " 'my',\n",
+       " 'myself',\n",
+       " 'we',\n",
+       " 'our',\n",
+       " 'ours',\n",
+       " 'ourselves',\n",
+       " 'you',\n",
+       " \"you're\",\n",
+       " \"you've\",\n",
+       " \"you'll\",\n",
+       " \"you'd\",\n",
+       " 'your',\n",
+       " 'yours',\n",
+       " 'yourself',\n",
+       " 'yourselves',\n",
+       " 'he',\n",
+       " 'him',\n",
+       " 'his',\n",
+       " 'himself',\n",
+       " 'she',\n",
+       " \"she's\",\n",
+       " 'her',\n",
+       " 'hers',\n",
+       " 'herself',\n",
+       " 'it',\n",
+       " \"it's\",\n",
+       " 'its',\n",
+       " 'itself',\n",
+       " 'they',\n",
+       " 'them',\n",
+       " 'their',\n",
+       " 'theirs',\n",
+       " 'themselves',\n",
+       " 'what',\n",
+       " 'which',\n",
+       " 'who',\n",
+       " 'whom',\n",
+       " 'this',\n",
+       " 'that',\n",
+       " \"that'll\",\n",
+       " 'these',\n",
+       " 'those',\n",
+       " 'am',\n",
+       " 'is',\n",
+       " 'are',\n",
+       " 'was',\n",
+       " 'were',\n",
+       " 'be',\n",
+       " 'been',\n",
+       " 'being',\n",
+       " 'have',\n",
+       " 'has',\n",
+       " 'had',\n",
+       " 'having',\n",
+       " 'do',\n",
+       " 'does',\n",
+       " 'did',\n",
+       " 'doing',\n",
+       " 'a',\n",
+       " 'an',\n",
+       " 'the',\n",
+       " 'and',\n",
+       " 'but',\n",
+       " 'if',\n",
+       " 'or',\n",
+       " 'because',\n",
+       " 'as',\n",
+       " 'until',\n",
+       " 'while',\n",
+       " 'of',\n",
+       " 'at',\n",
+       " 'by',\n",
+       " 'for',\n",
+       " 'with',\n",
+       " 'about',\n",
+       " 'against',\n",
+       " 'between',\n",
+       " 'into',\n",
+       " 'through',\n",
+       " 'during',\n",
+       " 'before',\n",
+       " 'after',\n",
+       " 'above',\n",
+       " 'below',\n",
+       " 'to',\n",
+       " 'from',\n",
+       " 'up',\n",
+       " 'down',\n",
+       " 'in',\n",
+       " 'out',\n",
+       " 'on',\n",
+       " 'off',\n",
+       " 'over',\n",
+       " 'under',\n",
+       " 'again',\n",
+       " 'further',\n",
+       " 'then',\n",
+       " 'once',\n",
+       " 'here',\n",
+       " 'there',\n",
+       " 'when',\n",
+       " 'where',\n",
+       " 'why',\n",
+       " 'how',\n",
+       " 'all',\n",
+       " 'any',\n",
+       " 'both',\n",
+       " 'each',\n",
+       " 'few',\n",
+       " 'more',\n",
+       " 'most',\n",
+       " 'other',\n",
+       " 'some',\n",
+       " 'such',\n",
+       " 'no',\n",
+       " 'nor',\n",
+       " 'not',\n",
+       " 'only',\n",
+       " 'own',\n",
+       " 'same',\n",
+       " 'so',\n",
+       " 'than',\n",
+       " 'too',\n",
+       " 'very',\n",
+       " 's',\n",
+       " 't',\n",
+       " 'can',\n",
+       " 'will',\n",
+       " 'just',\n",
+       " 'don',\n",
+       " \"don't\",\n",
+       " 'should',\n",
+       " \"should've\",\n",
+       " 'now',\n",
+       " 'd',\n",
+       " 'll',\n",
+       " 'm',\n",
+       " 'o',\n",
+       " 're',\n",
+       " 've',\n",
+       " 'y',\n",
+       " 'ain',\n",
+       " 'aren',\n",
+       " \"aren't\",\n",
+       " 'couldn',\n",
+       " \"couldn't\",\n",
+       " 'didn',\n",
+       " \"didn't\",\n",
+       " 'doesn',\n",
+       " \"doesn't\",\n",
+       " 'hadn',\n",
+       " \"hadn't\",\n",
+       " 'hasn',\n",
+       " \"hasn't\",\n",
+       " 'haven',\n",
+       " \"haven't\",\n",
+       " 'isn',\n",
+       " \"isn't\",\n",
+       " 'ma',\n",
+       " 'mightn',\n",
+       " \"mightn't\",\n",
+       " 'mustn',\n",
+       " \"mustn't\",\n",
+       " 'needn',\n",
+       " \"needn't\",\n",
+       " 'shan',\n",
+       " \"shan't\",\n",
+       " 'shouldn',\n",
+       " \"shouldn't\",\n",
+       " 'wasn',\n",
+       " \"wasn't\",\n",
+       " 'weren',\n",
+       " \"weren't\",\n",
+       " 'won',\n",
+       " \"won't\",\n",
+       " 'wouldn',\n",
+       " \"wouldn't\"]"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from nltk.corpus import stopwords\n",
+    "\n",
+    "# Get the stopwords for English\n",
+    "stop_words = stopwords.words('english')\n",
+    "\n",
+    "# Print the list\n",
+    "stop_words"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3273f603-c493-430b-b80e-8fcf5ef09fa3",
+   "metadata": {},
+   "source": [
+    "# STEMMING"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d2e4ac21-1a15-4fff-972d-596fcca78f73",
+   "metadata": {},
+   "source": [
+    "### making words simple"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "693aec33-cfac-4d14-9a91-ef0cddececde",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['run', 'ran', 'wrath', 'better', 'kid']"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from nltk.stem import PorterStemmer\n",
+    "\n",
+    "ps = PorterStemmer()\n",
+    "\n",
+    "words = [\"running\",\"ran\",\"wrath\",\"better\",\"kidding\",]\n",
+    "\n",
+    "stems = [ps.stem(word) for word in words ]\n",
+    "\n",
+    "stems"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "66d2c923-3354-4d67-b982-debdda7d832b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['run', 'runner', 'ran', 'easili', 'fairli']\n"
+     ]
+    }
+   ],
+   "source": [
+    "from nltk.stem import PorterStemmer\n",
+    "\n",
+    "ps = PorterStemmer()\n",
+    "words = [\"running\", \"runner\", \"ran\", \"easily\", \"fairly\"]\n",
+    "stems = [ps.stem(word) for word in words]\n",
+    "\n",
+    "print(stems)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "95d7c6ba-9d31-42a4-b842-bd33b8113c08",
+   "metadata": {},
+   "source": [
+    "# Lemmatization"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "c023996f-b337-4373-948d-5a3f11273a39",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Lemmas: ['running', 'runner', 'ran', 'easily', 'fairly']\n"
+     ]
+    }
+   ],
+   "source": [
+    "from nltk.stem import WordNetLemmatizer\n",
+    "\n",
+    "lemmatizer = WordNetLemmatizer()\n",
+    "lemmas = [lemmatizer.lemmatize(word) for word in words]\n",
+    "\n",
+    "print(\"Lemmas:\", lemmas)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0ae936fd-c499-4cb9-bca2-b9fa3f723171",
+   "metadata": {},
+   "source": [
+    "# POS Tagging"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "f717cbaf-d7be-4cca-bdcf-06d48f371139",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "POS Tags: [('running', 'VBG'), ('runner', 'NN'), ('ran', 'VBD'), ('easily', 'RB'), ('fairly', 'RB')]\n"
+     ]
+    }
+   ],
+   "source": [
+    "from nltk import pos_tag\n",
+    "\n",
+    "pos_tags = pos_tag(words)\n",
+    "print(\"POS Tags:\", pos_tags)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "457fc398-89d0-4809-9741-1d7d4646aeec",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
